@@ -1,23 +1,22 @@
-[0;32;49mCreated a parcel slot with 6 slots[0m
-[0;32;49mAllocated slot number: 1[0m
-[0;32;49mAllocated slot number: 6[0m
-[0;32;49mAllocated slot number: 2[0m
-[0;32;49mAllocated slot number: 5[0m
-[0;32;49mAllocated slot number: 3[0m
-[0;32;49mAllocated slot number: 4[0m
-[0;32;49mSlot number 5 is free[0m
-[0;32;49mSlot No		Registration No		Weight
+Created a parcel slot with 6 slots
+Allocated slot number: 1
+Allocated slot number: 6
+Allocated slot number: 2
+Allocated slot number: 5
+Allocated slot number: 3
+Allocated slot number: 4
+Slot number 5 is free
+Slot No		Registration No		Weight
 1		1234			400
 2		1			600
 3		2701			700
 4		3141			600
 5		NA			NA
 6		9999			400
-[0m
-[0;32;49mAllocated slot number: 5[0m
-[0;31;49mSorry, parcel slot is full[0m
-[0;32;49m1234, 9999, 333[0m
-[0;32;49m1, 5, 6[0m
-[0;32;49m4[0m
-[0;32;49mNOT FOUND[0m
-[0;31;49minvalid_command[0m
+Allocated slot number: 5
+Sorry, parcel slot is full
+1234, 9999, 333
+1, 5, 6
+4
+NOT FOUND
+invalid_command

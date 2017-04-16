@@ -41,9 +41,10 @@ e.g. If you have placed `input_file.txt` inside `/tmp/input`, your execution com
 
 ###Edge-Case scenarios:
 
+- When a user try to take action on parking lot without creating one
+
 #### create_parcel_slot_lot
 
-- When a user try to take action on parking lot without creating one
 - When user tries to create more than one parking lot 
 - When user tries to create parking lot with odd/negative/zero number of slots
 

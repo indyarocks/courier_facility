@@ -9,10 +9,14 @@ module CourierFacility
 		def initialize(argv)
 			if argv.empty?
 				@execution_mode = :execute_command_line
+				@options = {
+					colorize: true
+				}
 			elsif argv.size == 1
 				@execution_mode = :execute_input_file
 				@options = {
-					input_file: argv[0]
+					input_file: argv[0],
+					colorize: false
 				}
 			else
 				puts "Please execute the program without any argument or a single input file name".red
@@ -27,7 +31,7 @@ module CourierFacility
 		private
 			def execute_command_line(options)
 				while user_input = gets.chomp
-					process_and_execute_command(user_input)
+					process_and_execute_command(user_input, options[:colorize])
 				end
 			end
 
@@ -37,7 +41,7 @@ module CourierFacility
 					f.each_line do |line|
 						command_text = line.chomp
 						next if command_text.empty?
-						process_and_execute_command(command_text)
+						process_and_execute_command(command_text, options[:colorize])
 					end
 				end
 				rescue Errno::ENOENT
@@ -46,18 +50,26 @@ module CourierFacility
 				end
 			end
 
-			def process_and_execute_command(input_command_text)
+			def process_and_execute_command(input_command_text, colorize)
 				if input_command_text.to_s.downcase.strip == 'exit'
-					puts "Bye Bye!".green
+					message = colorize ? 'Bye Bye!' : 'Bye Bye'.green
+					puts message
 					exit
 				end
-
+				success, message = false, ''
 				begin
-					success_message = ::CourierFacility::CourierFacility.process_command(input_command_text)
-	        puts success_message.to_s.green
+					message = ::CourierFacility::CourierFacility.process_command(input_command_text)
+	        success = true
 	      rescue ::CourierFacility::Error => ex
-	        puts ex.message.red
+	      	success = false
+	        message = ex.message
 	      end
+	      if success 
+	      	message = colorize ? message.green : message
+	      else
+	      	message = colorize ? message.red : message
+	      end
+	      puts message
 			end
 	end
 end
