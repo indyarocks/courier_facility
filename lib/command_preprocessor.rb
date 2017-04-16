@@ -1,9 +1,9 @@
 module CourierFacility
   module CommandPreprocessor
     VALID_COMMANDS_WITH_ARGS = {
-      create_parking_slot_lot: {
-        regex: /^create_parking_slot_lot (?<rack_size>\d+)$/,
-        capture: [:rack_size]
+      create_parcel_slot_lot: {
+        regex: /^create_parcel_slot_lot (?<required_rack_size>\d+)$/,
+        capture: [:required_rack_size]
       },
       park: {
         regex: /^park (?<code>\d+) (?<weight>\d+)$/,
@@ -31,16 +31,9 @@ module CourierFacility
       }
     }.freeze
 
-    # VALID_COMMANDS_REGEX = /
-    # (?<create_parking_slot_lot>create_parcel_slot_lot \d+)|
-    # (?<park>park \d+ \d+)|
-    # (?<status>status)|
-    # (?<delivery>leave \d+ for delivery)|
-    # (?<parcel_code_for_parcels_with_weight>parcel_code_for_parcels_with_weight \d+)|
-    # (?<slot_numbers_for_parcels_with_weight>slot_numbers_for_parcels_with_weight \d+)|
-    # (?<slot_number_for_registration_number>slot_number_for_registration_number \d+)/x
-    
-    def self.preprocess_text_command(text)
+    # ASSUMPTION: All the arguments are integer.
+    # To add other data type, we'll have to add data_type key along with each capture key in VALID_COMMANDS_WITH_ARGS
+    def preprocess_text_command(text)
       # sanitize text command
       input_command = format_text(text)
       match_command, args = nil, {}
@@ -53,13 +46,13 @@ module CourierFacility
         end
       end
       {
-        match_command: match_command,
+        command: match_command,
         args: args
       }
     end
 
     private
-      def self.format_text(text)
+      def format_text(text)
         text.to_s.strip.gsub(/\s+/, ' ').downcase
       end
   end

@@ -1,36 +1,27 @@
 require_relative 'command_preprocessor'
+Dir[File.dirname(__FILE__) + '/courier_facility/*.rb'].each {|file| require file }
 
 module CourierFacility
   class CourierFacility
-    include ::CourierFacility::CommandPreprocessor
+    extend ::CourierFacility::CommandPreprocessor
 
-    def process_command(command_text)
-      execution_command = preprocess_text_command(command_text)
-      return 'invalid_command' if execution_command.nil?
+    def self.process_command(command_text)
+      execution_command_data = preprocess_text_command(command_text)
+      execution_command, args = execution_command_data[:command], execution_command_data[:args]
+      if execution_command.nil?
+        raise ::CourierFacility::Error.new(self), 'invalid_command'
+      end
+      
+      if execution_command != :create_parcel_slot_lot && !is_parking_lot_available?
+        raise ::CourierFacility::Error.new(self), 'Please create a parcel slot lot with create_parcel_slot_lot <even slot size> command!'
+      end
+      ::CourierFacility::ParkingLot.instance.send(execution_command, args)
     end
 
-    def park(code, weight)
-      # Check if slot available
-      # return error if full
-      parcel = Parcel.new(args) 
-      parcel.allocate_nearest_parcel_slot
-    end 
+    private
 
-    def status
-      # Check the status of all the parcelSlot
-    end
-    
-    def deliver_parcel
-      # unallocate the slot
-    end
-
-    def parcel_code_for_parcels_with_weight(weight)
-    end
-
-    def slot_numbers_for_parcesl_with_weight(weight)
-    end
-
-    def slot_number_for_registration_number(code)
-    end
+      def self.is_parking_lot_available?
+        ::CourierFacility::ParkingLot.instance.rack_size > 0
+      end
   end
 end
