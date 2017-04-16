@@ -5,6 +5,7 @@ require_relative './../lib/runner'
 
 # Loading dependent gems
 require 'colorize'
+require 'pry'
 
 runner = CourierFacility::Runner.new(ARGV)
 
