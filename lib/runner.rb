@@ -45,7 +45,9 @@ module CourierFacility
 					end
 				end
 				rescue Errno::ENOENT
-					puts "No such file found #{options[:input_file]}".red
+					message = "No such file found #{options[:input_file]}"
+					message = options[:clorize] ? message.red : message
+					puts message
 					exit(-1)
 				end
 			end
