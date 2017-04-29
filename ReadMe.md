@@ -1,3 +1,4 @@
+## Challenge Statement: https://github.com/indyarocks/courier_facility/blob/master/CourierSlotProblem.pdf
 ### Ruby Version: 2.4.0
 
 ### Setup
